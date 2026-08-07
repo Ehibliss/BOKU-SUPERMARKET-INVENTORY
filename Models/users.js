@@ -1,36 +1,43 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    require: true,
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
+    hasAdminAccess: {
+      type: Boolean,
+      default: false,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      enum: ["superadmin", "storekeeper", "salesperson"],
+      default: "user",
+    },
   },
-  email: {
-    type: String,
-    require: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    require: true,
-  },
-  gender: {
-    type: String,
-    require: true,
-  },
-  phone: {
-    type: String,
-    require: true,
-  },
-  role: {
-    type: String,
-    enum: ["admin", "user"],
-    default: "user",
-  },
-
   //   Date created and updated at
-  timestamps: true,
-});
+  { timestamps: true },
+);
+
 // create model
 const user = mongoose.model("user", userSchema);
+module.exports = user;
